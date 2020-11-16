@@ -1,4 +1,5 @@
 create database medicalEMR;
+use medicalEMR;
 
 create table patient(
 patientId integer unsigned not null AUTO_INCREMENT,

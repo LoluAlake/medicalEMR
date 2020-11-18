@@ -9,10 +9,21 @@ first_name varchar(60),
 last_name varchar(60),
 dob timestamp,
 gender char,
+height double, 
+weight double,
+email varchar(50),
+phonenumber varchar(20),
+maritalstatus varchar(10),
 ssn integer,
+emergencyname varchar(255),
+emergencycontact varchar(20),
+employmentstatus varchar(20),
 medicalhistory text,
-phonenumber integer,
-driverslicense varchar(20)
+allergies varchar(255),
+medicines varchar(255),
+createdDate timestamp,
+logicalDelete smallint default 0,
+primary key(patientId)
 );
 
 create table address(
@@ -22,7 +33,8 @@ address2 varchar(255),
 district varchar(100),
 city varchar(50),
 postalCode varchar(20),
-country varchar(30)
+country varchar(30),
+primary key(addressId)
 );
 
 create table procedures(
@@ -30,7 +42,9 @@ procedureId  integer unsigned AUTO_INCREMENT,
 cpt integer,
 description text,
 name varchar(250),
-cost double
+cost double,
+logicalDelete smallint default 0,
+primary key(procedureId)
 );
 
 create table PatientHistory(
@@ -39,7 +53,8 @@ procedureId integer,
 doctorId integer,
 addressId integer,
 purpose varchar(250),
-dateofvisit timestamp
+dateofvisit timestamp,
+nextappointement timestamp
 );
 
 create table Doctor(

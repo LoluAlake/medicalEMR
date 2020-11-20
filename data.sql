@@ -27,21 +27,10 @@ INSERT INTO PATIENT VALUES(1,454232,1,'HEATHER','MORRIS','1970-04-06','F',69,180
 (5,343412490,5,'GLORIA','COOK','2010-10-12','F',65,170,'GLORIA.COOK@sakilacustomer.org',
 	'234-890-2323','Un-married',8901229001,'Reid Cook','678-087-1283','Student','no','no','','2020-11-20',0);
 
-create table procedures(
-procedureId  integer unsigned AUTO_INCREMENT,
-cpt integer,
-description text,
-name varchar(250),
-cost double,
-logicalDelete smallint default 0,
-primary key(procedureId)
-);
-
 INSERT INTO PROCEDURES VALUES(1,90653,'Influenza Vaccine, inactivated (IIV), subunit, adjuvanted, for intramuscular use',
 	'Flu',20.00,0),
 	(2,84439,'Thyroid Panel with TSH ','Thyroid blood work',40.00,0),
 	(3,82947,'Glucose, quantitative , blood (except reagent strip)','Diabetes Check',67.90,0),
-	(4,11042,'Debridement, subcutaneous tissue (includes epidermis and dermis, if performed)','Foot Ulcer',45.50,0),
-	(5)
+	(4,11042,'Debridement, subcutaneous tissue (includes epidermis and dermis, if performed)','Foot Ulcer',45.50,0);
 
 

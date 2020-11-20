@@ -7,21 +7,21 @@ accountnumber integer,
 addressId integer,
 first_name varchar(60),
 last_name varchar(60),
-dob timestamp,
+dob date,
 gender char,
 height double, 
 weight double,
 email varchar(50),
 phonenumber varchar(20),
 maritalstatus varchar(10),
-ssn integer,
+ssn bigint,
 emergencyname varchar(255),
 emergencycontact varchar(20),
 employmentstatus varchar(20),
 medicalhistory text,
 allergies varchar(255),
 medicines varchar(255),
-createdDate timestamp,
+createdDate date,
 logicalDelete smallint default 0,
 primary key(patientId)
 );
@@ -53,8 +53,8 @@ procedureId integer,
 doctorId integer,
 addressId integer,
 purpose varchar(250),
-dateofvisit timestamp,
-nextappointement timestamp
+dateofvisit date,
+nextappointement date
 );
 
 create table Doctor(

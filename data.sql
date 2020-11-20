@@ -31,7 +31,6 @@ INSERT INTO PROCEDURES VALUES(1,90653,'Influenza Vaccine, inactivated (IIV), sub
 	'Flu',20.00,0),
 	(2,84439,'Thyroid Panel with TSH ','Thyroid blood work',40.00,0),
 	(3,82947,'Glucose, quantitative , blood (except reagent strip)','Diabetes Check',67.90,0),
-	(4,11042,'Debridement, subcutaneous tissue (includes epidermis and dermis, if performed)','Foot Ulcer',45.50,0),
-	(5)
+	(4,11042,'Debridement, subcutaneous tissue (includes epidermis and dermis, if performed)','Foot Ulcer',45.50,0);
 
 

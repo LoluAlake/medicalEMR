@@ -1,6 +1,5 @@
 package com.dtcc.emr.service;
 
-import com.dtcc.emr.model.Patient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,8 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import com.dtcc.emr.model.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,6 +28,7 @@ public class ShowAllPatients{
     public  ShowAllPatients(TabPane tabPane){
         this.tabPane=tabPane;
     }
+
     public Node getAllPatients() throws SQLException {
         Button addPatientBtn=new Button("Add New Patient");
        // addPatientBtn.setOnAction();
@@ -72,10 +72,10 @@ public class ShowAllPatients{
         return vbox;
     }
 
-    private void addNewPatient(){
+    public void addNewPatient(){
 
     }
-    private ObservableList getInitialTableData() throws SQLException {
+    public ObservableList getInitialTableData() throws SQLException {
         List<Patient> list = new ArrayList<>();
         //Database conection.
         Connection con=DatabaseConnection.getConnection();
@@ -99,11 +99,12 @@ public class ShowAllPatients{
         return data;
     }
 
-    private void updateButtonToTable(){
+
+    public void updateButtonToTable(){
         TableColumn<Patient, Void> updateCol = new TableColumn("Update Patient");
         Callback<TableColumn<Patient, Void>, TableCell<Patient, Void>> cellFactory = new Callback<TableColumn<Patient, Void>, TableCell<Patient, Void>>() {
             public TableCell<Patient, Void> call(final TableColumn<Patient, Void> param) {
-                final TableCell<Patient, Void> cell = new TableCell<Patient, Void>() {
+                final TableCell<Patient, Void> cell = new TableCell <Patient, Void>() {
                     private final Button btn = new Button("Update");
 
                     {
@@ -126,6 +127,7 @@ public class ShowAllPatients{
                 return cell;
             }
         };
+
         updateCol.setCellFactory(cellFactory);
         table.getColumns().add(updateCol);
     }
@@ -136,7 +138,7 @@ public class ShowAllPatients{
         Callback<TableColumn<Patient, Void>, TableCell<Patient, Void>> cellFactory = new Callback<>() {
 
             public TableCell<Patient, Void> call(final TableColumn<Patient, Void> param) {
-                final TableCell<Patient, Void> cell = new TableCell<Patient, Void>() {
+                final TableCell<Patient, Void> cell = new TableCell <Patient, Void>() {
                     private final Button deleteButton = new Button("Delete");
 
                     {

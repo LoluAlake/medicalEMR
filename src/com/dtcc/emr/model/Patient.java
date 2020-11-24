@@ -3,7 +3,6 @@ package com.dtcc.emr.model;
 import java.util.Date;
 
 public class Patient {
-
     private int patientId;
     private int accountnumber;
     private int addressId;

@@ -1,6 +1,5 @@
 package com.dtcc.emr;
 
-
 import com.dtcc.emr.service.ShowAllPatients;
 import javafx.application.Application;
 import javafx.scene.Scene;

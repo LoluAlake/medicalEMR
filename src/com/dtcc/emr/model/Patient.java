@@ -52,6 +52,18 @@ public class Patient {
         this.createdDate = createdDate;
     }
 
+    //list.add(new Patient(patientId,firstName,lastName,email,account,dob,address));
+    public Patient(int patientId,String first_name, String last_name, String email, int accountnumber, Date dob) {
+        this.patientId=patientId;
+        this.first_name=first_name;
+        this.last_name=last_name;
+        this.email=email;
+        this.accountnumber=accountnumber;
+        this.dob=dob;
+        //this.address=address;
+
+    }
+
     public int getPatientId() {
         return patientId;
     }

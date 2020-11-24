@@ -39,7 +39,7 @@ primary key(addressId)
 
 create table procedures(
 procedureId  integer unsigned AUTO_INCREMENT,
-cpt integer,
+cpt varchar(10),
 description text,
 name varchar(250),
 cost double,
@@ -61,7 +61,8 @@ create table Doctor(
 doctorId integer unsigned AUTO_INCREMENT,
 first_name varchar(100),
 last_name varchar(100),
-addressId integer
+addressId integer,
+primary key(doctorId)
 );
 
 

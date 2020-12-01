@@ -8,6 +8,7 @@ public class Address {
     private String city;
     private String postalcode;
     private String country;
+    private int logicalDelete;
 
     public Address() {
     }
@@ -76,6 +77,14 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public int getLogicalDelete() {
+        return logicalDelete;
+    }
+
+    public void setLogicalDelete(int logicalDelete) {
+        this.logicalDelete = logicalDelete;
     }
 
     @Override

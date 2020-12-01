@@ -1,5 +1,6 @@
 package com.dtcc.emr;
 
+import com.dtcc.emr.service.AddPatient;
 import com.dtcc.emr.service.ShowAllPatients;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -40,8 +41,8 @@ public class Main extends Application {
         Tab patient=new Tab();
         patient.setText("Patient");
         patient.setClosable(false);
-      //  AddPatient addPatient=new AddPatient();
-     //   patient.setContent(addPatient.addNewPatient());
+         AddPatient addPatient=new AddPatient(tabPane);
+         patient.setContent(addPatient.addNewPatient());
 
         Tab procedure=new Tab();
         procedure.setText("Procedure");
@@ -59,7 +60,7 @@ public class Main extends Application {
         pane.getChildren().addAll(tabPane);
 
         //setting the stage
-        Scene scene=new Scene(pane,1000,500);
+        Scene scene=new Scene(pane,1100,650);
         stage.setTitle("EMR Patients Data");
         stage.setScene(scene);
         stage.show();

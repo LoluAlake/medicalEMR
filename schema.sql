@@ -34,6 +34,7 @@ district varchar(100),
 city varchar(50),
 postalCode varchar(20),
 country varchar(30),
+logicalDelete smallint default 0,
 primary key(addressId)
 );
 

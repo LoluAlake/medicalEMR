@@ -1,16 +1,17 @@
-package com.dtcc.emr.model;
+package com.dtcc.emr.service;
 
-import java.time.LocalDate;
 import java.util.Date;
 
-public class Patient {
+public class PatientsInformation {
     private int patientId;
     private int accountnumber;
     private int addressId;
     private String first_name;
     private String last_name;
-    private LocalDate dob;
-    private char gender;
+    private String doctor_first_name;
+    private String doctor_last_name;
+    private Date dob;
+    private String gender;
     private double height;
     private double weight;
     private String email;
@@ -21,35 +22,54 @@ public class Patient {
     private String emergencycontact;
     private String employmentstatus;
     private String medicalhistory;
-    private String allegies;
+    private String allergies;
     private String medicines;
     private Date createdDate;
+    private String fullAddress;
+    private String address1;
+    private String address2;
+    private String city;
+    private String district;
+    private String country;
+    private String postalCode;
 
 
-    public Patient() {
+    public PatientsInformation() {
     }
 
-    public Patient(int patientId, int accountnumber, int addressId1, String first_name, String last_name, LocalDate dob, char gender, double height, double weight, String email, String phonenumber, String maritalstatus, Long ssn, String emergencyname, String emergencycontact, String employmentstatus, String medicalhistory, String allegies, String medicines, Date createdDate) {
-        this.patientId = patientId;
-        this.accountnumber = accountnumber;
-        this.addressId = addressId1;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.dob = dob;
-        this.gender = gender;
-        this.height = height;
-        this.weight = weight;
-        this.email = email;
-        this.phonenumber = phonenumber;
-        this.maritalstatus = maritalstatus;
-        this.ssn = ssn;
-        this.emergencyname = emergencyname;
-        this.emergencycontact = emergencycontact;
-        this.employmentstatus = employmentstatus;
-        this.medicalhistory = medicalhistory;
-        this.allegies = allegies;
-        this.medicines = medicines;
-        this.createdDate = createdDate;
+     // ,ssn,height,weight,address1,address2,city,district,country,postalCode,emergencyname,emergencycontact,medicalhistory,allergies,medicines));
+
+    public PatientsInformation(int patientId,int addressId,String first_name, String last_name,String email,int accountnumber, Date dob,String gender,
+                               String phonenumber,String maritalstatus, String fullAddress, Long ssn,double height,double weight,String address1,String address2,String city,
+                               String district, String country, String postalCode, String emergencyname,String emergencycontact,String medicalhistory,
+                               String allergies,String medicines,String employmentstatus){
+        this.patientId=patientId;
+        this.addressId=addressId;
+        this.first_name=first_name;
+        this.last_name=last_name;
+        this.email=email;
+        this.phonenumber=phonenumber;
+        this.accountnumber=accountnumber;
+        this.dob=dob;
+        this.gender=gender;
+        this.phonenumber=phonenumber;
+        this.maritalstatus=maritalstatus;
+        this.fullAddress=fullAddress;
+        this.ssn=ssn;
+        this.height=height;
+        this.weight=weight;
+        this.address1=address1;
+        this.address2=address2;
+        this.city=city;
+        this.postalCode=postalCode;
+        this.country=country;
+        this.district=district;
+        this.emergencyname=emergencyname;
+        this.emergencycontact=emergencycontact;
+        this.employmentstatus=employmentstatus;
+        this.medicalhistory=medicalhistory;
+        this.allergies=allergies;
+        this.medicines=medicines;
     }
 
     public int getPatientId() {
@@ -92,19 +112,19 @@ public class Patient {
         this.last_name = last_name;
     }
 
-    public LocalDate getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -189,11 +209,11 @@ public class Patient {
     }
 
     public String getAllegies() {
-        return allegies;
+        return allergies;
     }
 
     public void setAllegies(String allegies) {
-        this.allegies = allegies;
+        this.allergies = allegies;
     }
 
     public String getMedicines() {
@@ -202,6 +222,86 @@ public class Patient {
 
     public void setMedicines(String medicines) {
         this.medicines = medicines;
+    }
+
+    public String getFullAddress() {
+        return fullAddress;
+    }
+
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
+    }
+
+    public String getDoctor_first_name() {
+        return doctor_first_name;
+    }
+
+    public void setDoctor_first_name(String doctor_first_name) {
+        this.doctor_first_name = doctor_first_name;
+    }
+
+    public String getDoctor_last_name() {
+        return doctor_last_name;
+    }
+
+    public void setDoctor_last_name(String doctor_last_name) {
+        this.doctor_last_name = doctor_last_name;
+    }
+
+    public String getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
+    }
+
+    public String getAddress1() {
+        return address1;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public Date getCreatedDate() {
@@ -232,9 +332,10 @@ public class Patient {
                 ", emergencycontact='" + emergencycontact + '\'' +
                 ", employmentstatus='" + employmentstatus + '\'' +
                 ", medicalhistory='" + medicalhistory + '\'' +
-                ", allegies='" + allegies + '\'' +
+                ", allegies='" + allergies + '\'' +
                 ", medicines='" + medicines + '\'' +
                 ", createdDate=" + createdDate +
                 '}';
     }
 }
+

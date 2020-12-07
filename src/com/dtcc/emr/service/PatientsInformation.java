@@ -8,8 +8,6 @@ public class PatientsInformation {
     private int addressId;
     private String first_name;
     private String last_name;
-    private String doctor_first_name;
-    private String doctor_last_name;
     private Date dob;
     private String gender;
     private double height;
@@ -230,22 +228,6 @@ public class PatientsInformation {
 
     public void setFullAddress(String fullAddress) {
         this.fullAddress = fullAddress;
-    }
-
-    public String getDoctor_first_name() {
-        return doctor_first_name;
-    }
-
-    public void setDoctor_first_name(String doctor_first_name) {
-        this.doctor_first_name = doctor_first_name;
-    }
-
-    public String getDoctor_last_name() {
-        return doctor_last_name;
-    }
-
-    public void setDoctor_last_name(String doctor_last_name) {
-        this.doctor_last_name = doctor_last_name;
     }
 
     public String getAllergies() {

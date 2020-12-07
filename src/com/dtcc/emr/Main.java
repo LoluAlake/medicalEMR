@@ -1,6 +1,7 @@
 package com.dtcc.emr;
 
 import com.dtcc.emr.service.AddPatient;
+import com.dtcc.emr.service.PatientAppointment;
 import com.dtcc.emr.service.ShowAllPatients;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -29,14 +30,14 @@ public class Main extends Application {
         Tab allProcedures=new Tab();
         allProcedures.setText("All Procedures");
         allProcedures.setClosable(false);
-        //ShowAllProcedures showAllProcedures=new ShowAllProcedures(tabPane);
-       // allProcedures.setContent(showAllProcedures.getAllProcedures());
+        //ProceduresScreen showAllProcedures=new ProceduresScreen(tabPane);
+        //allProcedures.setContent(showAllProcedures.getAllProcedures());
 
         Tab patientVisit=new Tab();
         patientVisit.setText("Patient Visit");
         patientVisit.setClosable(false);
-       // PatientAppointment patientAppointment=new PatientAppointment();
-       // patientVisit.setContent(patientAppointment.addPatientAppointment());
+        PatientAppointment patientAppointment=new PatientAppointment();
+        patientVisit.setContent(patientAppointment.addPatientAppointment());
 
         Tab patient=new Tab();
         patient.setText("Patient");

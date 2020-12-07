@@ -1,24 +1,21 @@
 package com.dtcc.emr.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class PatientHistory {
     private int patientId;
     private int procedureId;
-    private int doctorId;
-    private int addressId;
     private String purpose;
-    private Date dateofvisit;
-    private Date nextappointment;
+    private LocalDate dateofvisit;
+    private LocalDate nextappointment;
 
     public PatientHistory() {
     }
 
-    public PatientHistory(int patientId, int procedureId, int doctorId, int addressId, String purpose, Date dateofvisit, Date nextappointment) {
+    public PatientHistory(int patientId, int procedureId, String purpose, LocalDate dateofvisit, LocalDate nextappointment) {
         this.patientId = patientId;
         this.procedureId = procedureId;
-        this.doctorId = doctorId;
-        this.addressId = addressId;
         this.purpose = purpose;
         this.dateofvisit = dateofvisit;
         this.nextappointment = nextappointment;
@@ -40,22 +37,6 @@ public class PatientHistory {
         this.procedureId = procedureId;
     }
 
-    public int getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
-    }
-
-    public int getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
-    }
-
     public String getPurpose() {
         return purpose;
     }
@@ -64,19 +45,19 @@ public class PatientHistory {
         this.purpose = purpose;
     }
 
-    public Date getDateofvisit() {
+    public LocalDate getDateofvisit() {
         return dateofvisit;
     }
 
-    public void setDateofvisit(Date dateofvisit) {
+    public void setDateofvisit(LocalDate dateofvisit) {
         this.dateofvisit = dateofvisit;
     }
 
-    public Date getNextappointment() {
+    public LocalDate getNextappointment() {
         return nextappointment;
     }
 
-    public void setNextappointment(Date nextappointment) {
+    public void setNextappointment(LocalDate nextappointment) {
         this.nextappointment = nextappointment;
     }
 
@@ -85,8 +66,6 @@ public class PatientHistory {
         return "PatientHistory{" +
                 "patientId=" + patientId +
                 ", procedureId=" + procedureId +
-                ", doctorId=" + doctorId +
-                ", addressId=" + addressId +
                 ", purpose='" + purpose + '\'' +
                 ", dateofvisit=" + dateofvisit +
                 ", nextappointment=" + nextappointment +

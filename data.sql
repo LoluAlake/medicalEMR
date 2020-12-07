@@ -33,10 +33,6 @@ INSERT INTO address VALUES (1,'47 MySakila Drive',NULL,'Alberta','Alberta','1234
 
 
 
-INSERT INTO Doctor VALUES(1,'KATHLEEN','ADAMS',28),
-(2,'JULIE','SANCHEZ',29),
-(3,'ANDY','NOLEN',30);
-
 INSERT INTO PATIENT VALUES(1,454232,1,'HEATHER','MORRIS','1970-04-06','F',69,180,
   'heather@gmailc.om','980-127-3564','Married',9088761264,'Andrew Morris','879-456-1453','Employed','no','no','','2020-11-20',0),
 (2,7843923,2,'ALICE','STEWART','1950-09-10','F',60,145,'ALICE.STEWART@gmail.com',
@@ -92,7 +88,11 @@ INSERT INTO PROCEDURES VALUES(1,'D0120','Periodic Oral Ecxam','Oral Exam',44.00,
   (31,'D9972','External Bleaching in dental office','External Teeth whitening',57.00,0),
   (32,'D9974','Internal Bleaching in dental office','Internal teeth whitening',90.00,0);
 
-
+INSERT INTO PATIENTHISTORY VALUES(1,1,'Routine checkup','2020-11-11','2021-12-12',0),
+(1,11,'For Crown','2018-04-21','2020-11-11',0),
+(1,24,'for tooth roots','2017-09-11',null,0),
+(1,18,'lower denture','2016-12-12',null,0),
+(1,18,'lower denture','2016-12-12',null,0);
 
 
 

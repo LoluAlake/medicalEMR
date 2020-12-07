@@ -24,7 +24,7 @@ medicines varchar(255),
 createdDate date,
 logicalDelete smallint default 0,
 primary key(patientId)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 create table address(
 addressId  integer unsigned AUTO_INCREMENT,
@@ -36,7 +36,7 @@ postalCode varchar(20),
 country varchar(30),
 logicalDelete smallint default 0,
 primary key(addressId)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 create table procedures(
 procedureId  integer unsigned AUTO_INCREMENT,
@@ -46,24 +46,16 @@ name varchar(250),
 cost double,
 logicalDelete smallint default 0,
 primary key(procedureId)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 create table PatientHistory(
 patientId integer unsigned not null,
-procedureId integer,
-doctorId integer,
-addressId integer,
+procedureId integer unsigned not null,
 purpose varchar(250),
 dateofvisit date,
-nextappointement date
-);
-
-create table Doctor(
-doctorId integer unsigned AUTO_INCREMENT,
-first_name varchar(100),
-last_name varchar(100),
-addressId integer,
-primary key(doctorId)
-);
-
+nextappointment date,
+logicalDelete smallint default 0,
+CONSTRAINT fk_patienthistory_patient FOREIGN KEY (patientId) REFERENCES patient (patientId),
+CONSTRAINT fk_patienthistory_procedures FOREIGN KEY (procedureId) REFERENCES procedures (procedureId)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

@@ -1,8 +1,6 @@
 package com.dtcc.emr;
 
-import com.dtcc.emr.service.AddPatient;
-import com.dtcc.emr.service.PatientAppointment;
-import com.dtcc.emr.service.ShowAllPatients;
+import com.dtcc.emr.service.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -30,8 +28,8 @@ public class Main extends Application {
         Tab allProcedures=new Tab();
         allProcedures.setText("All Procedures");
         allProcedures.setClosable(false);
-        //ProceduresScreen showAllProcedures=new ProceduresScreen(tabPane);
-        //allProcedures.setContent(showAllProcedures.getAllProcedures());
+        ShowAllProcedures showAllProcedures=new ShowAllProcedures(tabPane);
+        allProcedures.setContent(showAllProcedures.getAllProcedures());
 
         Tab patientVisit=new Tab();
         patientVisit.setText("Patient Visit");
@@ -48,9 +46,13 @@ public class Main extends Application {
         Tab procedure=new Tab();
         procedure.setText("Procedure");
         procedure.setClosable(false);
-
+        AddProcedure addProcedure = new AddProcedure(tabPane);
+        procedure.setContent(addProcedure.addNewProcedure());
         //add all tabs to the tabpane.
         tabPane.getTabs().addAll(allPatients,allProcedures,patientVisit,patient,procedure);
+
+        //add all tabs to the tabpane.
+        //tabPane.getTabs().addAll(allPatients,allProcedures,patientVisit,patient,procedure);
 
         //setting anchor pan as layout.
         AnchorPane pane = new AnchorPane();

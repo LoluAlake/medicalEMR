@@ -2,7 +2,7 @@ package com.dtcc.emr.model;
 
 public class Procedure {
     private int procedureId;
-    private int cpt;
+    private String cpt;
     private String description;
     private String name;
     private double cost;
@@ -10,7 +10,7 @@ public class Procedure {
     public Procedure() {
     }
 
-    public Procedure(int procedureId, int cpt, String description, String name, double cost) {
+    public Procedure(int procedureId, String cpt, String description, String name, double cost) {
         this.procedureId = procedureId;
         this.cpt = cpt;
         this.description = description;
@@ -26,11 +26,11 @@ public class Procedure {
         this.procedureId = procedureId;
     }
 
-    public int getCpt() {
+    public String getCpt() {
         return cpt;
     }
 
-    public void setCpt(int cpt) {
+    public void setCpt(String cpt) {
         this.cpt = cpt;
     }
 

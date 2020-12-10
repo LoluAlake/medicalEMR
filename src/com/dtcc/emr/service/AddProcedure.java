@@ -18,16 +18,19 @@ import java.sql.SQLException;
 
 public class AddProcedure {
     public TabPane tabPane;
-    Procedure procedure;
+    public Procedure procedures = new Procedure();
+    ProcedureOperations pro = new ProcedureOperations();
     TextField cptField;
     TextArea descriptionField;
     TextField nameField ;
     TextField costField;
     Label messageLabel;
 
-    public AddProcedure(TabPane tabPane, Procedure procedure){
+
+
+    public AddProcedure(TabPane tabPane, Procedure procedures){
        this.tabPane = tabPane;
-       this.procedure = procedure;
+       this.procedures = procedures;
     }
     public AddProcedure(TabPane tabPane){
         this.tabPane = tabPane;
@@ -54,13 +57,24 @@ public class AddProcedure {
         // Add Name Text Field
         cptField = new TextField();
         cptField.setPrefHeight(40);
-//        cptField.setText(procedure.getCpt());
+        if (this.procedures.getCpt() != null){
+            System.out.println("The cpt is: " + this.procedures.getCpt());
+             cptField.setText(this.procedures.getCpt());
+        }else{
+            cptField.setText("");
+        }
         gridPane.add(cptField, 1,1);
 
             Label descriptionLabel = new Label("Description : ");
         gridPane.add(descriptionLabel, 0,2);
         // Add Name Text Field
         descriptionField = new TextArea();
+        if (procedures.getDescription() != null){
+            System.out.println("The description is: " + procedures.getDescription());
+            descriptionField.setText(procedures.getDescription());
+        }else{
+            descriptionField.setText("");
+        }
         //dField.setPrefHeight(40);
 //        descriptionField.setText(procedure.getDescription());
         gridPane.add(descriptionField, 1,2);
@@ -70,7 +84,12 @@ public class AddProcedure {
         // Add Name Text Field
         nameField = new TextField();
         nameField.setPrefHeight(40);
-   //     nameField.setText(procedure.getName());
+        if (procedures.getName() != null){
+            System.out.println("The name is: " + procedures.getName());
+            nameField.setText(procedures.getName());
+        }else {
+            nameField.setText("");
+        }
         gridPane.add(nameField, 1,3);
 
         Label costLabel = new Label("Cost : ");
@@ -78,7 +97,12 @@ public class AddProcedure {
         // Add Name Text Field
         costField = new TextField();
         costField.setPrefHeight(40);
-        //     nameField.setText(procedure.getName());
+        if (procedures.getCost() != 0.0){
+            System.out.println("The cost is: " + procedures.getCost());
+            costField.setText(String.valueOf(procedures.getCost()));
+        }else {
+            costField.setText("");
+        }
         gridPane.add(costField, 1,4);
 
         Button submitButton = new Button("Submit");
@@ -90,11 +114,11 @@ public class AddProcedure {
         gridPane.setMargin(submitButton, new Insets(20, 0,20,0));
 
         EventHandler<ActionEvent> addEvent = e -> {
-       //     boolean valid=checkValidation();
-            boolean valid = true;
+            boolean valid=checkValidation();
+           // boolean valid = true;
             if(valid){
                 try {
-      //              addAllDataToPatientAndAddress();
+                    addAllDataToProcedure();
                 } catch (Exception p) {
                     p.printStackTrace();
                 }
@@ -107,6 +131,34 @@ public class AddProcedure {
         return gridPane;
     }
 
+    private void addAllDataToProcedure() throws SQLException {
+        procedures.setCpt(cptField.getText()==null? "" :cptField.getText());
+        procedures.setDescription(descriptionField.getText()==null? "" :descriptionField.getText());
+        procedures.setName(nameField.getText()==null? "" :nameField.getText());
+
+        if(costField.getText().isBlank()||costField.getText().isEmpty()||costField.getText()==null){procedures.setCost(0);}
+        else{procedures.setCost(Double.parseDouble(costField.getText()));}
+
+        if(procedures.getProcedureId()>0) {
+            pro.updateProcedure(procedures);
+        }
+        //NO PATIENT ID MEANS ==> ADD NEW PATIENT
+        else{
+            pro.addNewProcedure(procedures);
+        }
+
+        this.tabPane.getSelectionModel().select(1);
+        clearAllFields();
+    }
+
+    private void clearAllFields() {
+        cptField.setText("");
+        descriptionField.setText("");
+        nameField.setText("");
+        costField.setText("");
+    }
+
+
     private GridPane createRegistrationFormPane() {
 
         GridPane gridPane = new GridPane();
@@ -117,5 +169,28 @@ public class AddProcedure {
         gridPane.setVgap(10);
 
         return gridPane;
+    }
+
+    private boolean checkValidation() {
+        boolean isValid = true;
+        messageLabel.setText("");
+        if (cptField.getText().isBlank() || cptField.getText().isEmpty() || cptField.getText() == null) {
+            //message="Please enter first name.";
+            messageLabel.setText("Please Enter CPT");
+            return false;
+        }
+
+        if (descriptionField.getText().isBlank() || descriptionField.getText().isEmpty() || descriptionField.getText() == null) {
+            messageLabel.setText("Please Enter Description");
+            return false;
+        }
+
+        if (!(costField.getText().isEmpty() || costField.getText().isBlank())) {
+            if(!(costField.getText().matches("[0-9]\\d*(\\.\\d+)?$"))){
+                messageLabel.setText("Please Enter Numeric value for Cost");
+                return false;
+            }
+        }
+        return isValid;
     }
 }

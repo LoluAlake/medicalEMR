@@ -33,7 +33,7 @@ public class ShowAllProcedures {
                 @Override
                 public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
                     try{
-                        if(tabPane.getSelectionModel().getSelectedIndex()==0){
+                        if(tabPane.getSelectionModel().getSelectedIndex()==1){
                             refreshTable();
                         }
                     }catch(SQLException e){
@@ -86,11 +86,17 @@ public class ShowAllProcedures {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Procedure data = getTableView().getItems().get(getIndex());
-                            //System.out.println("ON UPDATE BUTTON CLICK: " + data);
+                            System.out.println("ON UPDATE BUTTON CLICK: " + data);
                             ProcedureOperations updateProcedure=new ProcedureOperations(data);
                             AddProcedure addProcedure=new AddProcedure(tabPane,data);
                             tabPane.getTabs().get(4).setContent(addProcedure.addNewProcedure());
                             tabPane.getSelectionModel().select(4);
+
+                            try {
+                                refreshTable();
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
                         });
                     }
 

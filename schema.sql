@@ -1,5 +1,6 @@
-create database medicalEMR;
-use medicalEMR;
+DROP SCHEMA IF EXISTS medicalEMR;
+CREATE SCHEMA medicalEMR;
+USE medicalEMR;
 
 create table patient(
 patientId integer unsigned not null AUTO_INCREMENT,

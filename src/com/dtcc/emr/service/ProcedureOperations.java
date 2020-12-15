@@ -53,7 +53,7 @@ public class ProcedureOperations {
         int procedureID = 0;
 
         try {
-
+            dbConnection = DatabaseConnection.getConnection();
             String addProcedureSql = "insert into procedures values(?,?,?,?,?,?)";
             PreparedStatement psProcedure = dbConnection.prepareStatement(addProcedureSql);
             psProcedure.setInt(1, 0);

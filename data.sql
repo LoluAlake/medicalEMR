@@ -304,6 +304,7 @@ INSERT INTO PATIENT VALUES(1,454232,1,'HEATHER','MORRIS','1970-04-06','F',69,180
   'robhardy@gmail.com','567-098-2166','Single',0009872377,'Jann Turner','128-443-5673','Employed','no','no','','2020-12-11',0);
 
 
+
 INSERT INTO PROCEDURES VALUES(1,'D0120','Periodic Oral Ecxam','Oral Exam',44.00,0),
   (2,'D0190','Screening of a Patient','Screening',18.00,0),
   (3,'D0330','Detailed and extensive oral evaluation‐ Problem focused, by report','Oral Evaluation',150.00,0),
@@ -367,4 +368,3 @@ INSERT INTO PATIENTHISTORY VALUES(1,1,'Routine checkup','2020-11-11','2021-12-12
 (27,2,'New Patient','2020-11-19',null,0),
 (28,8,'Flouride treatment','2020-05-06',null,0),
 (29,3,'detailed oral evaluation','2020-12-09',null,0);
-

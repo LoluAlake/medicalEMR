@@ -32,6 +32,7 @@ public class ShowAllPatients{
                 public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
                     try{
                         if(tabPane.getSelectionModel().getSelectedIndex()==0){
+
                             refreshTable();
                         }
                     }catch(SQLException e){

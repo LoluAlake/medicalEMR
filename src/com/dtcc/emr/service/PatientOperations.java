@@ -100,11 +100,11 @@ public class PatientOperations {
             psPatient.setString(4, patient.getFirst_name());
             psPatient.setString(5, patient.getLast_name());
 
-            // if(patient.getDob()==null){Date date=null; psPatient.setDate(6, date);}
-            //else{
+            if(patient.getDob()==null){Date date=null; psPatient.setDate(6, date);}
+            else{
             Date date = Date.valueOf(patient.getDob());
             psPatient.setDate(6, date);
-            //}
+            }
 
             psPatient.setString(7, String.valueOf(patient.getGender()));
             psPatient.setDouble(8, patient.getHeight());

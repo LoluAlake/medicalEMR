@@ -99,23 +99,25 @@ public class AddPatient {
         GridPane.setMargin(headerLabel, new Insets(10, 0,10,0));
 
         //===1st ROW===
-        Label firstNameLabel = new Label("First Name : ");
+        Label firstNameLabel = new Label("First Name (*) ");
         gridPane.add(firstNameLabel, 0,1);
         // Add Name Text Field
         firstNameField = new TextField();
         firstNameField.setPrefHeight(40);
-        firstNameField.setText(pInformation.getFirst_name());
+        if(pInformation.getFirst_name()==null){firstNameField.setText("");}
+        else{firstNameField.setText(pInformation.getFirst_name());}
         gridPane.add(firstNameField, 1,1);
 
-        Label lastNameLabel = new Label("Last Name : ");
+        Label lastNameLabel = new Label("Last Name (*) ");
         gridPane.add(lastNameLabel, 2,1);
         // Add Name Text Field
         lastNameField = new TextField();
         lastNameField.setPrefHeight(40);
-        lastNameField.setText(pInformation.getLast_name());
+        if(pInformation.getLast_name()==null){lastNameField.setText("");}
+        else{lastNameField.setText(pInformation.getLast_name());}
         gridPane.add(lastNameField, 3,1);
 
-        Label accountNumberLabel = new Label("Account Number: ");
+        Label accountNumberLabel = new Label("Account Number (*)");
         gridPane.add(accountNumberLabel, 4,1);
         // Add Name Text Field
         accountNumberField = new TextField();
@@ -157,11 +159,9 @@ public class AddPatient {
         datePicker= new DatePicker();
         gridPane.add(datePicker,1,3);
 
-        if(pInformation.getDob()!=null){
-            LocalDate lDate= new java.sql.Date(pInformation.getDob().getTime() ).toLocalDate();
-            datePicker.setValue(lDate);
-        }
-        else{ datePicker.setValue( LocalDate.now()); }
+        if(pInformation.getDob()==null ){ datePicker.setValue(null); }
+        else{ LocalDate lDate= new java.sql.Date(pInformation.getDob().getTime() ).toLocalDate();
+            datePicker.setValue(lDate); }
 
         //Gender
         Label genderLabel = new Label("Gender: ");
@@ -371,9 +371,17 @@ public class AddPatient {
         submitButton.setPrefHeight(40);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
-        gridPane.add(submitButton, 0, 13, 6, 1);
+        gridPane.add(submitButton, 0, 13, 4, 1);
         gridPane.setHalignment(submitButton, HPos.CENTER);
         gridPane.setMargin(submitButton, new Insets(20, 0,20,0));
+
+        Button resetButton = new Button("Reset");
+        resetButton.setPrefHeight(40);
+        resetButton.setDefaultButton(true);
+        resetButton.setPrefWidth(100);
+        gridPane.add(resetButton, 1, 13, 4, 1);
+        gridPane.setHalignment(resetButton, HPos.CENTER);
+        gridPane.setMargin(resetButton, new Insets(20, 0,20,0));
 
         EventHandler<ActionEvent> addEvent = e -> {
             boolean valid=checkValidation();
@@ -387,6 +395,13 @@ public class AddPatient {
         };
 
         submitButton.setOnAction(addEvent);
+
+        //RESET Button
+        resetButton.setOnAction(e->{
+            clearAllFields();
+            pInformation.setPatientId(0);
+            //pInformation=null;
+        });
 
         group.selectedToggleProperty().addListener((ob, o, n) -> {
             RadioButton rb1 = (RadioButton)group.getSelectedToggle();
@@ -443,7 +458,11 @@ public class AddPatient {
         if(ssnField.getText().isBlank()||ssnField.getText().isEmpty()||ssnField.getText()==null){patient.setSsn(0L);}
         else{patient.setSsn(Long.parseLong(ssnField.getText()));}
 
-        patient.setDob(datePicker.getValue());
+        if(datePicker.getEditor().getText().isBlank() || datePicker.getEditor().getText()==null || datePicker.getEditor().getText().isEmpty()){
+            patient.setDob(null);}
+        else {
+            //patient.setDob(datePicker.getValue());}
+            patient.setDob(datePicker.getConverter().fromString(datePicker.getEditor().getText()));}
 
         if(((RadioButton)group.getSelectedToggle()).getText()!=null){patient.setGender(((RadioButton)group.getSelectedToggle()).getText().charAt(0));}
         else{patient.setGender('F');}
@@ -485,19 +504,29 @@ public class AddPatient {
         boolean isValid=true;
         messageLabel.setText("");
         if(firstNameField.getText().isBlank() || firstNameField.getText().isEmpty() || firstNameField.getText()==null){
-            //message="Please enter first name.";
             messageLabel.setText("Please Enter First Name");
+            firstNameField.requestFocus();
             return false;
         }
 
         if(lastNameField.getText().isBlank() || lastNameField.getText().isEmpty() || lastNameField.getText()==null){
             messageLabel.setText("Please Enter Last Name");
+            lastNameField.requestFocus();
             return false;
         }
 
+        if(accountNumberField.getText().isBlank() || accountNumberField.getText().isEmpty() || accountNumberField.getText()==null){
+            messageLabel.setText("Please Enter Account Number");
+            accountNumberField.requestFocus();
+            return false;
+        }
         if(!(accountNumberField.getText().isEmpty() || accountNumberField.getText().isBlank())){
             if(!(accountNumberField.getText().matches("[0-9]+"))){
                 messageLabel.setText("Please Enter Numeric value for Account Number");
+                return false;
+            }
+            if(accountNumberField.getText().trim().length()>7){
+                messageLabel.setText("Please Enter Account Number less than or equal to 7 digits");
                 return false;
             }
         }
@@ -522,7 +551,7 @@ public class AddPatient {
         }
 
         if(!(heightField.getText().isEmpty() || heightField.getText().isBlank())){
-           // if(!(heightField.getText().matches("[0-9]+"))){
+            // if(!(heightField.getText().matches("[0-9]+"))){
             if(!(heightField.getText().matches("[0-9]\\d*(\\.\\d+)?$"))){
                 messageLabel.setText("Please Enter Numeric value for Height");
                 return false;
@@ -547,7 +576,9 @@ public class AddPatient {
         phoneField.setText("");
         emailField.setText("");
         ssnField.setText("");
-        datePicker.setValue( LocalDate.now());
+        // datePicker.setValue( LocalDate.now());
+        datePicker.setValue(null);
+        datePicker.setPromptText("");
         genderFemaleRadioBtn.setSelected(true);
         heightField.setText("");
         weightField.setText("");

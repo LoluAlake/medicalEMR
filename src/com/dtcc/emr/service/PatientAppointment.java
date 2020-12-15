@@ -70,7 +70,7 @@ public class PatientAppointment {
         gridPane.setHalignment(lblPatientVisit, HPos.CENTER);
         gridPane.setMargin(lblPatientVisit, new Insets(10, 0,10,0));
 
-        lblPatientName=new Label("Patient :");
+        lblPatientName=new Label("Patient (*)");
         gridPane.add(lblPatientName, 0,1);
 
         patientData=pi.getAllPatientsNames();
@@ -78,7 +78,7 @@ public class PatientAppointment {
         //patientComboBox.setItems(patientData);
         gridPane.add(patientComboBox, 1,1);
 
-        Label lblCpt = new Label("CPT Code: ");
+        Label lblCpt = new Label("CPT Code (*) ");
         gridPane.add(lblCpt,2,1);
 
         cptData=pi.getAllCPTCodes();
@@ -296,7 +296,7 @@ public class PatientAppointment {
     public boolean validateAllFields(){
         boolean valid=true;
         if(patientComboBox.getSelectionModel().isEmpty()){
-            System.out.println("no value is selected for the patient combo box.");
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setWidth(200);
             alert.setContentText("Please select Patient");
@@ -304,7 +304,7 @@ public class PatientAppointment {
             return false;
         }
         if(cptComboBox.getSelectionModel().isEmpty()){
-            System.out.println("no value is selected for the CPT combo box.");
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setWidth(200);
             alert.setContentText("Please select CPT code.");
@@ -345,7 +345,7 @@ public class PatientAppointment {
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 procedureId=rs.getInt("procedureId");
-                System.out.println("the id is "+procedureId);
+                //System.out.println("the id is "+procedureId);
             }
             rs.close();
             con.close();

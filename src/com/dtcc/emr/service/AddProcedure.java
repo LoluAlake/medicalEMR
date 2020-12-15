@@ -52,7 +52,7 @@ public class AddProcedure {
         GridPane.setMargin(headerLabel, new Insets(10, 0,10,0));
 
         //===1st ROW===
-        Label cptLabel = new Label("CPT : ");
+        Label cptLabel = new Label("CPT (*) ");
         gridPane.add(cptLabel, 0,1);
         // Add Name Text Field
         cptField = new TextField();
@@ -65,7 +65,7 @@ public class AddProcedure {
         }
         gridPane.add(cptField, 1,1);
 
-            Label descriptionLabel = new Label("Description : ");
+        Label descriptionLabel = new Label("Description (*) ");
         gridPane.add(descriptionLabel, 0,2);
         // Add Name Text Field
         descriptionField = new TextArea();

@@ -100,11 +100,11 @@ public class PatientOperations {
             psPatient.setString(4, patient.getFirst_name());
             psPatient.setString(5, patient.getLast_name());
 
-            // if(patient.getDob()==null){Date date=null; psPatient.setDate(6, date);}
-            //else{
+            if(patient.getDob()==null){Date date=null; psPatient.setDate(6, date);}
+            else{
             Date date = Date.valueOf(patient.getDob());
             psPatient.setDate(6, date);
-            //}
+            }
 
             psPatient.setString(7, String.valueOf(patient.getGender()));
             psPatient.setDouble(8, patient.getHeight());
@@ -279,22 +279,23 @@ public class PatientOperations {
 
     }
 
-    public static ObservableList<PatientHistoryInformation> getPatientHistory(int PatientID) {
+    public static ObservableList<PatientHistoryInformation> getPatientHistory(int patientID) {
         final ObservableList<PatientHistoryInformation> data = FXCollections.observableArrayList();
         Connection conn = DatabaseConnection.getConnection();
         String patientHistoryStr = "select p.patientId, p.accountnumber,p.first_name,p.last_name,pro.procedureId, pro.cpt,pro.description,pro.cost,ph.purpose, ph.dateOfvisit, ph.nextappointment\n" +
                 "from patientHistory ph\n" +
                 "join patient p on ph.patientId=p.patientId\n" +
                 "join procedures pro on ph.procedureId=pro.procedureId\n" +
-                "where p.patientId like ?";
+                "where p.patientId = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(patientHistoryStr);
 
-            if (PatientID == 0) {
+           /* if (PatientID == 0) {
                 ps.setString(1, "%" + "" + "%");
             } else {
                 ps.setString(1, "%" + PatientID + "%");
-            }
+            }*/
+            ps.setInt(1,patientID);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

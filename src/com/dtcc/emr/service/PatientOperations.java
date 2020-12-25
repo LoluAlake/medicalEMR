@@ -274,7 +274,7 @@ public class PatientOperations {
                 "from patientHistory ph\n" +
                 "join patient p on ph.patientId=p.patientId\n" +
                 "join procedures pro on ph.procedureId=pro.procedureId\n" +
-                "where ph.logicalDelete=0 and pro.logicalDelete=0 and p.patientId = ?";
+                "where ph.logicalDelete=0 and p.patientId = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(patientHistoryStr);
             ps.setInt(1,patientID);

@@ -34,7 +34,7 @@ public class Main extends Application {
         Tab patientVisit=new Tab();
         patientVisit.setText("Patient Visit");
         patientVisit.setClosable(false);
-        PatientAppointment patientAppointment=new PatientAppointment();
+        PatientAppointment patientAppointment=new PatientAppointment(tabPane);
         patientVisit.setContent(patientAppointment.addPatientAppointment());
 
         Tab patient=new Tab();
@@ -48,11 +48,9 @@ public class Main extends Application {
         procedure.setClosable(false);
         AddProcedure addProcedure = new AddProcedure(tabPane);
         procedure.setContent(addProcedure.addNewProcedure());
-        //add all tabs to the tabpane.
-        tabPane.getTabs().addAll(allPatients,allProcedures,patientVisit,patient,procedure);
 
         //add all tabs to the tabpane.
-        //tabPane.getTabs().addAll(allPatients,allProcedures,patientVisit,patient,procedure);
+        tabPane.getTabs().addAll(allPatients,allProcedures,patientVisit,patient,procedure);
 
         //setting anchor pan as layout.
         AnchorPane pane = new AnchorPane();

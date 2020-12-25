@@ -136,7 +136,7 @@ public class ShowAllPatients{
                                 }
                                 table.getItems().remove(getIndex());
                             }
-                            else {System.out.println("DO NOT DELETE THE RECORD"); }
+                            else {System.out.println("PATIENT DELETE RECORD - CANCEL"); }
                         });
                     }
                     @Override

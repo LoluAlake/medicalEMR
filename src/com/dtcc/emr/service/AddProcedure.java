@@ -58,7 +58,6 @@ public class AddProcedure {
         cptField = new TextField();
         cptField.setPrefHeight(40);
         if (this.procedures.getCpt() != null){
-            System.out.println("The cpt is: " + this.procedures.getCpt());
              cptField.setText(this.procedures.getCpt());
         }else{
             cptField.setText("");
@@ -70,7 +69,6 @@ public class AddProcedure {
         // Add Name Text Field
         descriptionField = new TextArea();
         if (procedures.getDescription() != null){
-            System.out.println("The description is: " + procedures.getDescription());
             descriptionField.setText(procedures.getDescription());
         }else{
             descriptionField.setText("");
@@ -85,7 +83,6 @@ public class AddProcedure {
         nameField = new TextField();
         nameField.setPrefHeight(40);
         if (procedures.getName() != null){
-            System.out.println("The name is: " + procedures.getName());
             nameField.setText(procedures.getName());
         }else {
             nameField.setText("");
@@ -98,7 +95,6 @@ public class AddProcedure {
         costField = new TextField();
         costField.setPrefHeight(40);
         if (procedures.getCost() != 0.0){
-            System.out.println("The cost is: " + procedures.getCost());
             costField.setText(String.valueOf(procedures.getCost()));
         }else {
             costField.setText("");

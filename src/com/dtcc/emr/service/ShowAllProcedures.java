@@ -86,7 +86,6 @@ public class ShowAllProcedures {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Procedure data = getTableView().getItems().get(getIndex());
-                            System.out.println("ON UPDATE BUTTON CLICK: " + data);
                             ProcedureOperations updateProcedure=new ProcedureOperations(data);
                             AddProcedure addProcedure=new AddProcedure(tabPane,data);
                             tabPane.getTabs().get(4).setContent(addProcedure.addNewProcedure());

@@ -2,7 +2,6 @@ package com.dtcc.emr.service;
 
 import com.dtcc.emr.model.Address;
 import com.dtcc.emr.model.Patient;
-import com.dtcc.emr.model.PatientHistory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -11,7 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 
 public class PatientOperations {
@@ -43,8 +41,9 @@ public class PatientOperations {
     }
 
     public void deletePatient() throws SQLException {
+         Connection con = DatabaseConnection.getConnection();
         try {
-            Connection con = DatabaseConnection.getConnection();
+
             String sql = "Update Patient set logicalDelete=1 where patientId=?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1, patientInformation.getPatientId());
@@ -55,9 +54,16 @@ public class PatientOperations {
             psAddress.setInt(1, patientInformation.getAddressId());
             psAddress.executeUpdate();
 
-            con.close();
+            String phSql="update PatientHistory set logicalDelete=1 where patientId=?";
+            PreparedStatement phStmt = con.prepareStatement(phSql);
+            phStmt.setInt(1, patientInformation.getPatientId());
+            phStmt.executeUpdate();
+
+
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally{
+            con.close();
         }
     }
 
@@ -124,24 +130,6 @@ public class PatientOperations {
 
             psPatient.execute();
 
-           /* String getPatientSql = "select max(patientId) as count from Patient";
-            Statement st = dbConnection.createStatement();
-            ResultSet rsPatientId = st.executeQuery(getPatientSql);
-
-            while (rsPatientId.next()) {
-                int patientID = rsPatientId.getInt("count");
-            }
-            if (patient.getGender() == 'F') {
-                gender = "Female";
-            } else {
-                gender = "Male";
-            }
-            rs.close();
-            rsPatientId.close();
-
-            java.util.Date dateDOB=Date.from(patient.getDob().atStartOfDay(ZoneId.systemDefault()).toInstant());
-           // list1.add(new PatientsInformation(patientID,addressID,patient.getFirst_name(),patient.getLast_name(),patient.getEmail(),patient.getAccountnumber(),dateDOB,gender,patient.getPhonenumber(),patient.getMaritalstatus(),fullAddress, patient.getSsn(), patient.getHeight(),patient.getWeight(),address.getAddress1(), address.getAddress2(),address.getCity(),address.getDistrict(),address.getCountry(),address.getPostalcode(),patient.getEmergencyname(),patient.getEmergencycontact(), patient.getMedicalhistory(),patient.getAllegies(),patient.getMedicines(),patient.getEmploymentstatus()));
-            */
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -286,15 +274,9 @@ public class PatientOperations {
                 "from patientHistory ph\n" +
                 "join patient p on ph.patientId=p.patientId\n" +
                 "join procedures pro on ph.procedureId=pro.procedureId\n" +
-                "where p.patientId = ?";
+                "where ph.logicalDelete=0 and pro.logicalDelete=0 and p.patientId = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(patientHistoryStr);
-
-           /* if (PatientID == 0) {
-                ps.setString(1, "%" + "" + "%");
-            } else {
-                ps.setString(1, "%" + PatientID + "%");
-            }*/
             ps.setInt(1,patientID);
 
             ResultSet rs = ps.executeQuery();

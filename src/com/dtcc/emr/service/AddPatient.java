@@ -15,10 +15,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 public class AddPatient {
 
@@ -153,7 +156,7 @@ public class AddPatient {
         gridPane.add(ssnField,5,2);
 
         //dob
-        Label dobLabel = new Label("Date of Birth: (mm/dd/yyyy)");
+        Label dobLabel = new Label("Date of Birth: (MM/dd/yyyy)");
         gridPane.add(dobLabel,0,3);
 
         datePicker= new DatePicker();
@@ -531,6 +534,20 @@ public class AddPatient {
             }
         }
 
+        if(!(datePicker.getEditor().getText().isBlank())){
+            String dateValue=datePicker.getEditor().getText();
+            //String regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
+           // String regex = "^(0?[1-9] | 1[0-2])/(0?[1-9]|[12][0-9]|3[01])/([0-9]{4})$";
+            String regex="^(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/([0-9]{4})$";
+            boolean result = dateValue.matches(regex);
+            if(result){}
+            else{
+                messageLabel.setText("Enter Proper Date - Format is MM/dd/yyyy");
+                datePicker.requestFocus();
+                return false;
+            }
+        }
+
         /*if(!(emailField.getText().isEmpty() || emailField.getText().isBlank() || emailField.getText()==null)){
            // String regex="^(.+)@(.+)$";
             String regex="^.+@.+\\\\..+$";
@@ -565,7 +582,6 @@ public class AddPatient {
                 return false;
             }
         }
-
         return isValid;
     }
 
@@ -578,7 +594,8 @@ public class AddPatient {
         ssnField.setText("");
         // datePicker.setValue( LocalDate.now());
         datePicker.setValue(null);
-        datePicker.setPromptText("");
+        datePicker.getEditor().setText("");
+        //datePicker.setPromptText("");
         genderFemaleRadioBtn.setSelected(true);
         heightField.setText("");
         weightField.setText("");

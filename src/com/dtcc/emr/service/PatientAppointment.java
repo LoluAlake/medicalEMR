@@ -1,6 +1,8 @@
 package com.dtcc.emr.service;
 
 import com.dtcc.emr.model.PatientHistory;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,12 +22,18 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class PatientAppointment {
+    private TabPane tabPane;
+
     private Label lblPatientVisit;
     private Label lblPatientName;
     private Label lblCptDescText;
+    private TextArea txtCptDesc;
     private Label lblCptDesc;
 
     private ComboBox patientComboBox;
@@ -55,7 +63,23 @@ public class PatientAppointment {
     PatientHistoryOperations pho;
 
     public PatientAppointment(){}
+    public PatientAppointment(TabPane tabPane){
+        this.tabPane=tabPane;
+    }
     public Node addPatientAppointment() throws SQLException {
+
+        if(this.tabPane!=null) {
+            this.tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+                @Override
+                public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+                    if(tabPane.getSelectionModel().getSelectedIndex()==2){
+                        resetComboBoxes();
+                        refreshTable();
+                    }
+                }
+            });
+        }
+
         BorderPane borderPane=new BorderPane();
 
         GridPane gridPane=new GridPane();
@@ -98,10 +122,14 @@ public class PatientAppointment {
         lblCptDesc=new Label("CPT Desc : ");
         gridPane.add(lblCptDesc,2,2);
 
-        lblCptDescText=new Label("");
-        gridPane.add(lblCptDescText,3,2);
+        //lblCptDescText=new Label("");
+        txtCptDesc =new TextArea();
+        txtCptDesc.setEditable(false);
+        txtCptDesc.setWrapText(true);
+        txtCptDesc.setMaxWidth(250);
+        gridPane.add(txtCptDesc,3,2);
 
-        Label lblNextAppointment = new Label("Next Appointment : ");
+        Label lblNextAppointment = new Label("Next Appointment: (MM/dd/yyyy) ");
         gridPane.add(lblNextAppointment,0,3);
 
         datePicker= new DatePicker();
@@ -180,17 +208,25 @@ public class PatientAppointment {
                 ref.data =pi.getPatientHistory(ph.getPatientId());
                 visitTable.setItems(ref.data);
             }
+
         });
 
         //CPT COMBOBOX LISTENER
         cptComboBox.valueProperty().addListener((obv, t, t1)->{
+
             if(cptComboBox.getValue()==null){ }
             else{setCPTDescription(cptComboBox.getValue().toString());}
+
         });
 
         //SUBMIT BUTTON ACTION
         submitButton.setOnAction(e->{
-            boolean isValid= validateAllFields();
+            boolean isValid= false;
+            try {
+                isValid = validateAllFields();
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
+            }
             if(isValid){
                addPatientHistoryInDatabase();
             }
@@ -266,7 +302,8 @@ public class PatientAppointment {
         datePicker.setValue(null);
         datePicker.setPromptText("");
 
-        lblCptDescText.setText("");
+        //lblCptDescText.setText("");
+        txtCptDesc.setText("");
 
         data.clear();
         data =pi.getPatientHistory(0);
@@ -284,7 +321,8 @@ public class PatientAppointment {
             while(rs.next()){
                 cptDesc=rs.getString("description");
             }
-            lblCptDescText.setText(cptDesc);
+            //lblCptDescText.setText(cptDesc);
+            txtCptDesc.setText(cptDesc);
             rs.close();
             con.close();
         } catch (SQLException sqlException) {
@@ -293,7 +331,7 @@ public class PatientAppointment {
 
     }
 
-    public boolean validateAllFields(){
+    public boolean validateAllFields() throws ParseException {
         boolean valid=true;
         if(patientComboBox.getSelectionModel().isEmpty()){
 
@@ -311,6 +349,45 @@ public class PatientAppointment {
             alert.show();
             return false;
         }
+
+        if(!(datePicker.getEditor().getText().isBlank())){
+            String dateValue=datePicker.getEditor().getText();
+            //String regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
+            // String regex = "^(0?[1-9] | 1[0-2])/(0?[1-9]|[12][0-9]|3[01])/([0-9]{4})$";
+            String regex="^(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/([0-9]{4})$";
+            boolean result = dateValue.matches(regex);
+            if(result){}
+            else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setWidth(200);
+                alert.setContentText("Please select valid Date Format (MM/dd/YYYY)");
+                alert.show();
+                //messageLabel.setText("Enter Proper Date - Format is MM/dd/yyyy");
+                datePicker.requestFocus();
+                return false;
+            }
+        }
+
+        if(!(datePicker.getEditor().getText().isBlank())) {
+          //  public static boolean isValidDate (String pDateString) throws ParseException {
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            Date todaysDate = sdf.parse(sdf.format(new Date()));
+
+            String pDateString=datePicker.getEditor().getText();
+            Date date = new SimpleDateFormat("MM/dd/yyyy").parse(pDateString);
+
+            if(todaysDate.compareTo(date)==0){}
+            else if((new Date().before(date))){}
+            else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setWidth(200);
+                alert.setContentText("Please enter future date.");
+                alert.show();
+                datePicker.requestFocus();
+                return false;
+                }
+            }
+
         return valid;
     }
 
@@ -319,6 +396,21 @@ public class PatientAppointment {
         data =pi.getPatientHistory(0);
         visitTable.setItems(data);
     }
+
+    public void resetComboBoxes(){
+        patientData.clear();
+        cptData.clear();
+        try {
+            patientData=pi.getAllPatientsNames();
+            cptData=pi.getAllCPTCodes();
+            patientComboBox.setItems(patientData);
+            cptComboBox.setItems(cptData);
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+    }
     public void addPatientHistoryInDatabase(){
         PatientHistoryInformation ph= (PatientHistoryInformation) patientComboBox.getSelectionModel().getSelectedItem();
         int procedureId=getProcedureId();
@@ -326,7 +418,7 @@ public class PatientAppointment {
         pHistory.setPatientId(ph.getPatientId());
         pHistory.setProcedureId(procedureId);
         pHistory.setPurpose(purposeField.getText()==null? "" :purposeField.getText());
-        pHistory.setNextappointment(datePicker.getValue()==null? null : datePicker.getValue());
+        pHistory.setNextappointment(datePicker.getEditor().getText()==null? null : datePicker.getConverter().fromString(datePicker.getEditor().getText()));
         pho=new PatientHistoryOperations();
         pho.addPatientHistoryData(pHistory);
 

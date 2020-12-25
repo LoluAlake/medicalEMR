@@ -304,10 +304,9 @@ INSERT INTO PATIENT VALUES(1,454232,1,'HEATHER','MORRIS','1970-04-06','F',69,180
   'robhardy@gmail.com','567-098-2166','Single',0009872377,'Jann Turner','128-443-5673','Employed','no','no','','2020-12-11',0);
 
 
-
 INSERT INTO PROCEDURES VALUES(1,'D0120','Periodic Oral Ecxam','Oral Exam',44.00,0),
-  (2,'D0190','Screening of a Patient','Screening',18.00,0),
-  (3,'D0330','Detailed and extensive oral evaluation‐ Problem focused, by report','Oral Evaluation',150.00,0),
+  (2,'D0160','Detailed and extensive oral evaluation‐ Problem focused, by report','Oral Evaluation',150.00,0),
+  (3,'D0190','Screening of a Patient','Screening',18.00,0),
   (4,'D0330','Panoramic radiographic Image','Radiography',68.00,0),
   (5,'D0350','2D oral/facial photographic image obtained intra‐orally or extra‐orally','photographic Image',70.00,0),
   (6,'D0476','Special stains, for microorganisms','Stain Removal',220.00,0),

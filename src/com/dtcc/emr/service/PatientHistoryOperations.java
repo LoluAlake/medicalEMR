@@ -36,8 +36,18 @@ public class PatientHistoryOperations {
 
     public void deletePatientHistoryData(PatientHistoryInformation ph){
         try {
+            String sql=null;
             Connection con = DatabaseConnection.getConnection();
-            String sql = "Update Patienthistory set logicalDelete=1 where patientId=? and procedureId=? and purpose=? and dateofvisit=? and nextappointment=?";
+            if(ph.getNextAppointment()!=null)
+            {
+               // System.out.println("In NOT NULL SQL");
+                sql = "Update Patienthistory set logicalDelete=1 where patientId=? and procedureId=? and purpose=? and dateofvisit=? and nextappointment=?";
+            }
+            else{
+                //System.out.println("In  Null SQL");
+                sql = "Update Patienthistory set logicalDelete=1 where patientId=? and procedureId=? and purpose=? and dateofvisit=? and nextappointment is null";
+            }
+
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1, ph.getPatientId());
             stmt.setInt(2, ph.getProcedureId());
@@ -45,8 +55,10 @@ public class PatientHistoryOperations {
             if(ph.getDateOfVisit()==null){stmt.setDate(4, null);}
             else{stmt.setDate(4, Date.valueOf(ph.getDateOfVisit()));}
 
-            if(ph.getNextAppointment()==null){stmt.setDate(5, null);}
-            else{stmt.setDate(5, Date.valueOf(ph.getNextAppointment()));}
+            if(ph.getNextAppointment()!=null){
+                stmt.setDate(5, Date.valueOf(ph.getNextAppointment()));}
+               // stmt.setDate(5, null);}
+         //   else{stmt.setDate(5, Date.valueOf(ph.getNextAppointment()));}
             stmt.executeUpdate();
 
             stmt.close();
